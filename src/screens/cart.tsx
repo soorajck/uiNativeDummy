@@ -76,6 +76,7 @@ const Cart = ({navigation}: Props) => {
                 width={92}
                 borderRadius={3}
                 font={12}
+                noShadow={true}
               />
             ))}
           </ScrollView>
@@ -166,7 +167,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   desc: {
-    marginTop: 30,
+    marginTop: 10,
     marginHorizontal: 30,
   },
   descText: {

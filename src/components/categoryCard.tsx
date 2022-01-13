@@ -8,6 +8,7 @@ type props = {
   width?: number;
   font: number;
   borderRadius?: number;
+  noShadow?: boolean;
   onPress?: () => void;
 };
 
@@ -18,16 +19,23 @@ const CategoryCard = ({
   width,
   font,
   borderRadius,
+  noShadow,
   onPress,
 }: props) => {
   return (
-    <Pressable
+    <View
       style={[
-        styles(color, height, width, font, borderRadius).cardContainer,
-        styles(color).shadowProp,
+        styles(color, height, width, font, borderRadius, noShadow).mainView,
+        styles(color, height, width, font, borderRadius, noShadow)
+          .shadowContainer,
       ]}>
-      <Text style={styles().text}>{title}</Text>
-    </Pressable>
+      <Pressable
+        style={[
+          styles(color, height, width, font, borderRadius).cardContainer,
+        ]}>
+        <Text style={styles().text}>{title}</Text>
+      </Pressable>
+    </View>
   );
 };
 const styles = (
@@ -36,10 +44,13 @@ const styles = (
   width?: number,
   font?: number,
   borderRadius?: number,
+  noShadow?: boolean,
 ) =>
   StyleSheet.create({
+    mainView: {
+      height: height ? height + 20 : 80,
+    },
     cardContainer: {
-      flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: color,
@@ -53,11 +64,11 @@ const styles = (
       fontFamily: 'Montserrat-SemiBold',
       color: '#FFFFFF',
     },
-    shadowProp: {
+    shadowContainer: {
       shadowColor: color,
       shadowOffset: {
-        width: 0,
-        height: 4,
+        width: noShadow ? 0 : 3,
+        height: noShadow ? 0 : 15,
       },
       shadowOpacity: 0.3,
       shadowRadius: 4.65,

@@ -20,23 +20,24 @@ const CategoryCardImage = ({
   onPress,
 }: props) => {
   return (
-    <View style={[styles(borderRadius).cardContainer, styles().shadowProp]}>
-      <ImageBackground
-        source={image}
-        resizeMode="cover"
-        style={[styles(width, height).image]}>
-        <Text style={styles(width, height).text}>{title}</Text>
-      </ImageBackground>
-    </View>
+    <Pressable style={styles().shadowProp}>
+      <View style={styles(borderRadius).cardContainer}>
+        <ImageBackground
+          source={image}
+          resizeMode="cover"
+          style={[styles(width, height).image]}>
+          <Text style={styles(width, height).text}>{title}</Text>
+        </ImageBackground>
+      </View>
+    </Pressable>
   );
 };
 const styles = (width?: number, height?: number, borderRadius?: number) =>
   StyleSheet.create({
     cardContainer: {
-      flex: 1,
       borderRadius: 10,
       marginRight: 15,
-      marginBottom: 15,
+      marginBottom: 25,
       overflow: 'hidden',
     },
     text: {
@@ -56,7 +57,7 @@ const styles = (width?: number, height?: number, borderRadius?: number) =>
       shadowColor: '#000',
       shadowOffset: {
         width: 0,
-        height: 4,
+        height: 10,
       },
       shadowOpacity: 0.3,
       shadowRadius: 4.65,
