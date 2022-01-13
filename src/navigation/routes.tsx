@@ -10,20 +10,17 @@ function Routes() {
   const Tab = createBottomTabNavigator();
   //this file is only for the bottom tab navigation
 
-  const bottomNavigatorConfigs = {
-    screenOptions: {
-      showLabel: false,
-      tabBarStyle: {
-        height: 100,
-        paddingTop: 30,
-        backgroundColor: 'rgba(40, 49, 59, 0.83)',
-      },
-    },
-  };
-
   return (
     <NavigationContainer>
-      <Tab.Navigator {...bottomNavigatorConfigs}>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarStyle: {
+            height: 100,
+            paddingTop: 30,
+            backgroundColor: 'rgba(40, 49, 59, 0.83)',
+            position: 'absolute',
+          },
+        }}>
         <Tab.Screen
           name="Home"
           component={Home}
