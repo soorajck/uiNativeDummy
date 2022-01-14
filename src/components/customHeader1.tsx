@@ -15,7 +15,6 @@ const CustomHeader1 = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 10,
-
     marginHorizontal: 30,
     display: 'flex',
     flexDirection: 'row',

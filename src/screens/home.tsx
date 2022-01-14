@@ -10,6 +10,7 @@ import {
 } from '../store/dummyItemData';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
+//type defenition of cart item
 export type CartItemType = {
   id: number;
   description: string;
@@ -28,14 +29,16 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList>;
 
 const Home = ({navigation}: Props) => {
-  //handlingItemClick
+  //handling clicking on itemto redirect to product page
+
   const handleItemClick = (item: CartItemType) => {
     navigation.navigate('ItemPage', {
       item: item,
     });
   };
 
-  //recomended items flatslist
+  //recomended items flatslist component
+
   const Recomended = ({title, image, item}: any) => (
     <CategoryCardImage
       height={150}
@@ -48,10 +51,13 @@ const Home = ({navigation}: Props) => {
     />
   );
   //render items flatlist recomended
+
   const renderItemRecomended = ({item}: any) => (
     <Recomended title={item.title} image={item.image} item={item} />
   );
-  //popular items flatlist
+
+  //popular items flatlist component
+
   const Popular = ({item, image}: any) => (
     <CategoryCardImage
       height={140}
@@ -62,7 +68,9 @@ const Home = ({navigation}: Props) => {
       handleItemClick={handleItemClick}
     />
   );
+
   //render items popular flatlist
+
   const renderItemPopular = ({item}: any) => <Popular item={item} />;
 
   return (
