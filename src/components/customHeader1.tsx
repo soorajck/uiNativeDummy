@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View, Platform} from 'react-native';
 
 const CustomHeader1 = () => {
   return (
@@ -14,7 +14,8 @@ const CustomHeader1 = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
+    marginTop: Platform.OS === 'ios' ? 50 : 10,
+
     marginHorizontal: 30,
     display: 'flex',
     flexDirection: 'row',

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Pressable, StyleSheet, View} from 'react-native';
+import {Image, Pressable, StyleSheet, View, Platform} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 type Props = {
   handleBack: () => void;
@@ -23,7 +23,7 @@ const CustomHeader2 = ({handleBack}: Props) => {
 };
 const styles = StyleSheet.create({
   container: {
-    marginTop: 60,
+    marginTop: Platform.OS === 'ios' ? 60 : 20,
     marginHorizontal: 30,
     display: 'flex',
     flexDirection: 'row',
