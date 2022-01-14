@@ -45,57 +45,58 @@ const Cart = ({navigation}: Props) => {
   return (
     <SafeAreaView style={styles.container}>
       <CustomHeader2 handleBack={handleBack} />
-      <View style={styles.shadowContainer}>
-        <Image
-          source={require('../../assets/images/flower5.png')}
-          style={styles.image}
-        />
-      </View>
-
-      <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>LeDécor Veases set of 5</Text>
-        <Text style={styles.headerSubText}>by LeDécor</Text>
-      </View>
-      <View style={styles.priceAndRating}>
-        <Text style={styles.priceText}>$ 24.99</Text>
-        <View style={styles.ratingContainer}>
-          {[...Array(5)].map((e, i) => (
-            <Image
-              source={require('../../assets/images/starRated.png')}
-              key={Math.random()}
-            />
-          ))}
-          <Image source={require('../../assets/images/starUnrated.png')} />
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.shadowContainer}>
+          <Image
+            source={require('../../assets/images/flower5.png')}
+            style={styles.image}
+          />
         </View>
-      </View>
-      <View style={styles.idealContainer}>
-        <Text style={styles.idealHeading}>Ideal for</Text>
-        <View style={styles.idealContainerBadge}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {dummyData.map(item => (
-              <CategoryCard
-                title={item.title}
+
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerText}>LeDécor Veases set of 5</Text>
+          <Text style={styles.headerSubText}>by LeDécor</Text>
+        </View>
+        <View style={styles.priceAndRating}>
+          <Text style={styles.priceText}>$ 24.99</Text>
+          <View style={styles.ratingContainer}>
+            {[...Array(5)].map((e, i) => (
+              <Image
+                source={require('../../assets/images/starRated.png')}
                 key={Math.random()}
-                height={32}
-                width={92}
-                borderRadius={3}
-                font={12}
-                noShadow={true}
-                grad1={item.grad1}
-                grad2={item.gard2}
               />
             ))}
-          </ScrollView>
+            <Image source={require('../../assets/images/starUnrated.png')} />
+          </View>
         </View>
-      </View>
-      <View style={styles.desc}>
-        <Text style={styles.descText}>
-          High Grade Porcelain Ceramic Material Light Weight, Durable & Long
-          Lasting Impression It glories your home interiors beautifully Royal
-          touch finishing, best deal for gifting
-        </Text>
-      </View>
-
+        <View style={styles.idealContainer}>
+          <Text style={styles.idealHeading}>Ideal for</Text>
+          <View style={styles.idealContainerBadge}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {dummyData.map(item => (
+                <CategoryCard
+                  title={item.title}
+                  key={Math.random()}
+                  height={32}
+                  width={92}
+                  borderRadius={3}
+                  font={12}
+                  noShadow={true}
+                  grad1={item.grad1}
+                  grad2={item.gard2}
+                />
+              ))}
+            </ScrollView>
+          </View>
+        </View>
+        <View style={styles.desc}>
+          <Text style={styles.descText}>
+            High Grade Porcelain Ceramic Material Light Weight, Durable & Long
+            Lasting Impression It glories your home interiors beautifully Royal
+            touch finishing, best deal for gifting
+          </Text>
+        </View>
+      </ScrollView>
       <View style={styles.addToCartButton}>
         <Image source={require('../../assets/images/shopping-cart.png')} />
         <Text style={styles.addToCartText}> Add to Cart</Text>
@@ -204,6 +205,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 19,
     fontFamily: 'Montserrat-semibold',
+  },
+  scrollView: {
+    flex: 1,
+    marginBottom: 80,
   },
 });
 export default Cart;
