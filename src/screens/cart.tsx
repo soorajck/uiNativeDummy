@@ -3,6 +3,7 @@ import {Image, StyleSheet, View, Text, ScrollView} from 'react-native';
 import colors from '../../assets/colors/colors';
 import {CustomHeader2, CategoryCard} from '../components';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {SafeAreaView} from 'react-native-safe-area-context';
 type RootStackParamList = {
   Home: undefined;
   Profile: undefined;
@@ -42,7 +43,7 @@ const Cart = ({navigation}: Props) => {
   ];
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <CustomHeader2 handleBack={handleBack} />
       <View style={styles.shadowContainer}>
         <Image
@@ -99,7 +100,7 @@ const Cart = ({navigation}: Props) => {
         <Image source={require('../../assets/images/shopping-cart.png')} />
         <Text style={styles.addToCartText}> Add to Cart</Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({

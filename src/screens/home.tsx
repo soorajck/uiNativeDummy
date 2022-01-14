@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text, ScrollView, FlatList} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import colors from '../../assets/colors/colors';
 import {CategoryCard, CategoryCardImage, CustomHeader1} from '../components';
 
@@ -90,7 +91,7 @@ const Home = () => {
   const renderItemPopular = ({item}: any) => <Popular image={item.image} />;
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <CustomHeader1 />
       <View style={styles.headerContainer}>
         <Text style={styles.headingText}>What are you deorating today?</Text>
@@ -132,7 +133,7 @@ const Home = () => {
           keyExtractor={item => item.id}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
