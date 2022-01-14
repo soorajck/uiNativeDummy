@@ -14,7 +14,7 @@ const CustomHeader1 = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    marginTop: Platform.OS === 'ios' ? 50 : 10,
+    marginTop: 10,
 
     marginHorizontal: 30,
     display: 'flex',

@@ -23,7 +23,7 @@ const CustomHeader2 = ({handleBack}: Props) => {
 };
 const styles = StyleSheet.create({
   container: {
-    marginTop: Platform.OS === 'ios' ? 60 : 20,
+    marginTop: 20,
     marginHorizontal: 30,
     display: 'flex',
     flexDirection: 'row',
