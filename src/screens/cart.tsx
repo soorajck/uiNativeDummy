@@ -1,5 +1,13 @@
 import React, {useEffect} from 'react';
-import {Image, StyleSheet, View, Text, ScrollView} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  Touchable,
+  Pressable,
+} from 'react-native';
 import colors from '../../assets/colors/colors';
 import {CustomHeader2, CategoryCard} from '../components';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -9,6 +17,13 @@ type RootStackParamList = {
 };
 type Props = NativeStackScreenProps<RootStackParamList>;
 const Cart = ({navigation}: Props) => {
+  //hiding tab bar
+  // useEffect(() => {
+  //   navigation.s({
+  //     tabBarVisible: false,
+  //   });
+  // }, []);
+
   //handling back button click
   const handleBack = () => {
     navigation.navigate('Home');
@@ -93,6 +108,11 @@ const Cart = ({navigation}: Props) => {
           Lasting Impression It glories your home interiors beautifully Royal
           touch finishing, best deal for gifting
         </Text>
+      </View>
+
+      <View style={styles.addToCartButton}>
+        <Image source={require('../../assets/images/shopping-cart.png')} />
+        <Text style={styles.addToCartText}> Add to Cart</Text>
       </View>
     </View>
   );
@@ -180,6 +200,24 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     color: colors.textColor,
     fontFamily: 'Montserrat-Regular',
+  },
+  addToCartButton: {
+    height: 100,
+    backgroundColor: 'rgba(40, 49, 59, 0.83)',
+    position: 'absolute',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    bottom: 0,
+    flexDirection: 'row',
+  },
+  addToCartText: {
+    marginLeft: 17,
+    color: 'rgba(115, 226, 250, 1)',
+    fontSize: 16,
+    lineHeight: 19,
+    fontFamily: 'Montserrat-semibold',
   },
 });
 export default Cart;

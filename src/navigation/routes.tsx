@@ -62,6 +62,11 @@ function Routes() {
           options={{
             headerShown: false,
             tabBarLabel: '',
+
+            tabBarStyle: {
+              display: 'none',
+            },
+
             tabBarIcon: ({focused}) => {
               return (
                 <Image
