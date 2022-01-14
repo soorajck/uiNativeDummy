@@ -93,46 +93,61 @@ const Home = () => {
   return (
     <SafeAreaView style={styles.container}>
       <CustomHeader1 />
-      <View style={styles.headerContainer}>
-        <Text style={styles.headingText}>What are you deorating today?</Text>
-      </View>
-      <View style={styles.categoryContainer}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {dummyCategoryData.map(item => (
-            <CategoryCard
-              title={item.title}
-              font={14}
-              key={item.title}
-              grad1={item.grad1}
-              grad2={item.gard2}
-            />
-          ))}
-        </ScrollView>
-      </View>
-      <View style={styles.subHeading}>
-        <Text style={styles.subHeadingText}>Recomended</Text>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headingText}>What are you deorating today?</Text>
+        </View>
+        <View style={styles.categoryContainer}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {dummyCategoryData.map(item => (
+              <CategoryCard
+                title={item.title}
+                font={14}
+                key={item.title}
+                grad1={item.grad1}
+                grad2={item.gard2}
+              />
+            ))}
+          </ScrollView>
+        </View>
+        <View style={styles.subHeading}>
+          <Text style={styles.subHeadingText}>Recomended</Text>
 
-        <FlatList
-          style={styles.subHeadingContent}
-          horizontal
-          data={dummyDataCards}
-          renderItem={renderItemRecomended}
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={item => item.id}
-        />
-      </View>
-      <View style={styles.subHeading}>
-        <Text style={styles.subHeadingText}>Popular</Text>
+          <FlatList
+            style={styles.subHeadingContent}
+            horizontal
+            data={dummyDataCards}
+            renderItem={renderItemRecomended}
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={item => item.id}
+          />
+        </View>
 
-        <FlatList
-          style={styles.subHeadingContent}
-          horizontal
-          data={dummyDataCards1}
-          renderItem={renderItemPopular}
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={item => item.id}
-        />
-      </View>
+        <View style={styles.subHeading}>
+          <Text style={styles.subHeadingText}>Popular</Text>
+
+          <FlatList
+            style={styles.subHeadingContent}
+            horizontal
+            data={dummyDataCards1}
+            renderItem={renderItemPopular}
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={item => item.id}
+          />
+        </View>
+        <View style={styles.subHeading}>
+          <Text style={styles.subHeadingText}>Popular</Text>
+
+          <FlatList
+            style={styles.subHeadingContent}
+            horizontal
+            data={dummyDataCards1}
+            renderItem={renderItemPopular}
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={item => item.id}
+          />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -170,6 +185,10 @@ const styles = StyleSheet.create({
   subHeadingContent: {
     marginTop: 19,
     marginRight: 30,
+  },
+  scrollView: {
+    flex: 1,
+    marginBottom: 80,
   },
 });
 export default Home;
