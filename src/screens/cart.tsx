@@ -25,21 +25,26 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList>;
 
 const Cart = ({navigation, route}: Props) => {
-  //redirecting to item page when cart is empty
+  //handling clicking on item in the cart
 
-  //handlingItemClick
   const handleItemClick = (item: CartItemType) => {
     navigation.navigate('ItemPage', {
       item: item,
     });
   };
 
-  //stateManagement of cart using zustad
+  //state Management of cart using zustad
+
   const cartZustad = useCartStore(state => state.cartItems);
   const addToCart = useCartStore(state => state.setCartItemsData);
   const [cartItems, setCartItems] = useState(cartZustad);
 
+  useEffect(() => {
+    setCartItems(cartZustad);
+  }, [cartZustad]);
+
   //handling adding to cart
+
   const handleAddToCart = (clickedItem: CartItemType) => {
     setCartItems(prev => {
       const isItemInCart = prev.find(item => item.id === clickedItem.id);
@@ -55,6 +60,7 @@ const Cart = ({navigation, route}: Props) => {
   };
 
   //handling removing from cart
+
   const handleRemoveFromCart = (id: number) => {
     setCartItems(prev =>
       prev.reduce((ack, item) => {
@@ -68,22 +74,24 @@ const Cart = ({navigation, route}: Props) => {
     );
   };
 
-  //getting total number of items
+  //getting total number of items in cart
+
   const getTotalItems = (items: CartItemType[]) =>
     items.reduce((ack: number, item) => ack + item.amount, 0);
 
-  //calculating total price
+  //calculating total price of items in the cart
 
   const calculateTotal = (items: CartItemType[]) =>
     items.reduce((ack: number, item) => ack + item.amount * item.price, 0);
 
-  //storing cart changes in zustad
+  //storing cart changes in zustad and asynch storage on internal state change
+
   useEffect(() => {
     storeData(cartItems);
     addToCart(cartItems);
   }, [cartItems]);
 
-  //setting in asynch storage
+  //function for setting cart items  in asynch storage
 
   const storeData = async (value: any) => {
     try {

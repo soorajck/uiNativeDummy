@@ -61,7 +61,6 @@ export const dummyDataRecomended = [
       'High Grade Porcelain Ceramic Material Light Weight, Durable & Long Lasting Impression It glories your home interiors beautifully Royal touch finishing, best deal for gifting',
     category: ['Home', 'Office', 'Hotel', 'Beach'],
     rating: 3,
-    amount: 1,
   },
   {
     price: 35,
@@ -72,7 +71,6 @@ export const dummyDataRecomended = [
       'High Grade Porcelain Ceramic Material Light Weight, Durable & Long Lasting Impression It glories your home interiors beautifully Royal touch finishing, best deal for gifting',
     category: ['Home', 'Office', 'Hotel', 'Beach'],
     rating: 4,
-    amount: 1,
   },
   {
     price: 45,
@@ -83,7 +81,6 @@ export const dummyDataRecomended = [
       'High Grade Porcelain Ceramic Material Light Weight, Durable & Long Lasting Impression It glories your home interiors beautifully Royal touch finishing, best deal for gifting',
     category: ['Home', 'Office', 'Hotel', 'Beach'],
     rating: 5,
-    amount: 1,
   },
 ];
 
@@ -98,7 +95,6 @@ export const dummyDataIdeal = [
       'High Grade Porcelain Ceramic Material Light Weight, Durable & Long Lasting Impression It glories your home interiors beautifully Royal touch finishing, best deal for gifting',
     category: ['Home', 'Office', 'Hotel', 'Beach'],
     rating: 4,
-    amount: 1,
   },
   {
     price: 35,
@@ -109,7 +105,6 @@ export const dummyDataIdeal = [
       'High Grade Porcelain Ceramic Material Light Weight, Durable & Long Lasting Impression It glories your home interiors beautifully Royal touch finishing, best deal for gifting',
     category: ['Home', 'Office', 'Hotel', 'Beach'],
     rating: 3,
-    amount: 1,
   },
   {
     price: 25,
@@ -120,6 +115,5 @@ export const dummyDataIdeal = [
       'High Grade Porcelain Ceramic Material Light Weight, Durable & Long Lasting Impression It glories your home interiors beautifully Royal touch finishing, best deal for gifting',
     category: ['Home', 'Office', 'Hotel', 'Beach'],
     rating: 2,
-    amount: 1,
   },
 ];

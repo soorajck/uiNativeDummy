@@ -6,11 +6,10 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import colors from '../../assets/colors/colors';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-//creating tab navigator
+//creating tab navigator for bottom navigation
+
 export const TabNavigators = () => {
-  //creating tab navidation
   const Tab = createBottomTabNavigator();
-  //this file is only for the bottom tab navigation
 
   return (
     <Tab.Navigator
@@ -80,8 +79,6 @@ export const TabNavigators = () => {
 const Stack = createNativeStackNavigator();
 
 function Routes() {
-  //running fetch data from asycn storage
-
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="TabNavigators">

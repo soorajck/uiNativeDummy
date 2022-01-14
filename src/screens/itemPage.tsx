@@ -24,14 +24,24 @@ type RootStackParamList = {
 
 type Props = NativeStackScreenProps<RootStackParamList>;
 const ItemPage = ({navigation, route}: Props) => {
-  //getting item from props
+  //handling back button click
+
+  const handleBack = () => {
+    navigation.goBack();
+  };
+
+  //getting item from props passed from navigation stack
+
   const {item}: any = route.params;
+
   //stateManagement of cart using zustad
+
   const cartZustad = useCartStore(state => state.cartItems);
   const addToCart = useCartStore(state => state.setCartItemsData);
   const [cartItems, setCartItems] = useState(cartZustad);
 
   //handling adding to cart
+
   const handleAddToCart = (clickedItem: CartItemType) => {
     setCartItems(prev => {
       const isItemInCart = prev.find(item => item.id === clickedItem.id);
@@ -47,6 +57,7 @@ const ItemPage = ({navigation, route}: Props) => {
   };
 
   //handling removing from cart
+
   const handleRemoveFromCart = (id: number) => {
     setCartItems(prev =>
       prev.reduce((ack, item) => {
@@ -61,6 +72,7 @@ const ItemPage = ({navigation, route}: Props) => {
   };
 
   //handling item availability in cart
+
   const handleItemAvailability = (id: number) => {
     const item = cartZustad.find(item => item.id === id);
     if (item) {
@@ -69,18 +81,14 @@ const ItemPage = ({navigation, route}: Props) => {
     return false;
   };
 
-  //handling back button click
-  const handleBack = () => {
-    navigation.goBack();
-  };
+  //storing cart changes in zustad store and async storage
 
-  //storing cart changes in zustad
   useEffect(() => {
     addToCart(cartItems);
     storeData(cartItems);
   }, [cartItems]);
 
-  //setting in asynch storage
+  //setting in asynch storage cart items
 
   const storeData = async (value: any) => {
     try {

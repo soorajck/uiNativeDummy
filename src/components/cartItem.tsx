@@ -17,7 +17,7 @@ export default function CartItem({
   handleItemClick,
 }: props) {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} key={item.id}>
       <Pressable onPress={() => handleItemClick(item)}>
         <Image
           source={require('../../assets/images/flower1.png')}
@@ -31,7 +31,6 @@ export default function CartItem({
         </View>
         <View style={styles.quantityContainer}>
           <Pressable
-            style={styles.quantityButtons}
             onPress={() => {
               removeFromCart(item.id);
             }}>
@@ -46,7 +45,6 @@ export default function CartItem({
           </Pressable>
           <Text style={styles.volumeText}>{item.amount}</Text>
           <Pressable
-            style={styles.quantityButtons}
             onPress={() => {
               addToCart(item);
             }}>
