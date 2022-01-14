@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text, ScrollView} from 'react-native';
+import {StyleSheet, View, Text, ScrollView, FlatList} from 'react-native';
 import colors from '../../assets/colors/colors';
 import {CategoryCard, CategoryCardImage, CustomHeader1} from '../components';
 
@@ -33,14 +33,17 @@ const Home = () => {
     {
       title: 'Candle Holder',
       image: require('../../assets/images/candle.png'),
+      id: '1',
     },
     {
       title: 'Candle Holder',
       image: require('../../assets/images/candle.png'),
+      id: '2',
     },
     {
       title: 'Candle Holder',
       image: require('../../assets/images/candle.png'),
+      id: '3',
     },
   ];
 
@@ -48,14 +51,43 @@ const Home = () => {
   const dummyDataCards1 = [
     {
       image: require('../../assets/images/flower1.png'),
+      id: '1',
     },
     {
       image: require('../../assets/images/flower2.png'),
+      id: '2',
     },
     {
       image: require('../../assets/images/flower3.png'),
+      id: '3',
     },
   ];
+
+  const Recomended = ({title, image}: any) => (
+    <CategoryCardImage
+      height={150}
+      width={315}
+      title={title}
+      image={image}
+      borderRadius={10}
+    />
+  );
+
+  const renderItemRecomended = ({item}: any) => (
+    <Recomended title={item.title} image={item.image} />
+  );
+
+  const Popular = ({image}: any) => (
+    <CategoryCardImage
+      height={140}
+      width={120}
+      image={image}
+      borderRadius={12}
+      key={Math.random()}
+    />
+  );
+
+  const renderItemPopular = ({item}: any) => <Popular image={item.image} />;
 
   return (
     <View style={styles.container}>
@@ -79,39 +111,26 @@ const Home = () => {
       <View style={styles.subHeading}>
         <Text style={styles.subHeadingText}>Recomended</Text>
 
-        <ScrollView
-          horizontal
+        <FlatList
           style={styles.subHeadingContent}
-          showsHorizontalScrollIndicator={false}>
-          {dummyDataCards.map(item => (
-            <CategoryCardImage
-              height={150}
-              width={315}
-              title={item.title}
-              image={item.image}
-              borderRadius={10}
-              key={Math.random()}
-            />
-          ))}
-        </ScrollView>
+          horizontal
+          data={dummyDataCards}
+          renderItem={renderItemRecomended}
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={item => item.id}
+        />
       </View>
       <View style={styles.subHeading}>
         <Text style={styles.subHeadingText}>Popular</Text>
 
-        <ScrollView
-          horizontal
+        <FlatList
           style={styles.subHeadingContent}
-          showsHorizontalScrollIndicator={false}>
-          {dummyDataCards1.map(item => (
-            <CategoryCardImage
-              height={140}
-              width={120}
-              image={item.image}
-              borderRadius={12}
-              key={Math.random()}
-            />
-          ))}
-        </ScrollView>
+          horizontal
+          data={dummyDataCards1}
+          renderItem={renderItemPopular}
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={item => item.id}
+        />
       </View>
     </View>
   );
