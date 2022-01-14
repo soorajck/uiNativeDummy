@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {Image, StyleSheet, View, Text} from 'react-native';
+import {Image} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {Home, Cart, Search, Favorite} from '../screens';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import colors from '../../assets/colors/colors';
 
 function Routes() {
   //creating tab navidation
@@ -17,7 +17,7 @@ function Routes() {
           tabBarStyle: {
             height: 100,
             paddingTop: 30,
-            backgroundColor: 'rgba(40, 49, 59, 0.83)',
+            backgroundColor: colors.backgroundNavigationBar,
             position: 'absolute',
           },
         }}>
@@ -82,12 +82,3 @@ function Routes() {
 }
 
 export default Routes;
-
-const styles = StyleSheet.create({
-  bottomTab: {
-    backgroundColor: 'rgba(40, 49, 59, 0.6)',
-    height: 90,
-    position: 'absolute',
-    paddingTop: 10,
-  },
-});

@@ -4,6 +4,7 @@ import colors from '../../assets/colors/colors';
 import {CategoryCard, CategoryCardImage, CustomHeader1} from '../components';
 
 const Home = () => {
+  //dummy data for categories / badges
   const dummyCategoryData = [
     {
       title: 'Living Room',
@@ -27,7 +28,7 @@ const Home = () => {
       gard2: 'rgba(255, 94, 26, 1)',
     },
   ];
-
+  //dummy data image cards1
   const dummyDataCards = [
     {
       title: 'Candle Holder',
@@ -42,6 +43,8 @@ const Home = () => {
       image: require('../../assets/images/candle.png'),
     },
   ];
+
+  //dummy data image cards1
   const dummyDataCards1 = [
     {
       image: require('../../assets/images/flower1.png'),

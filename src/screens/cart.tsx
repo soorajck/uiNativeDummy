@@ -1,13 +1,5 @@
-import React, {useEffect} from 'react';
-import {
-  Image,
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  Touchable,
-  Pressable,
-} from 'react-native';
+import React from 'react';
+import {Image, StyleSheet, View, Text, ScrollView} from 'react-native';
 import colors from '../../assets/colors/colors';
 import {CustomHeader2, CategoryCard} from '../components';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -196,7 +188,7 @@ const styles = StyleSheet.create({
   },
   addToCartButton: {
     height: 100,
-    backgroundColor: 'rgba(40, 49, 59, 0.83)',
+    backgroundColor: colors.backgroundNavigationBar,
     position: 'absolute',
     display: 'flex',
     justifyContent: 'center',
