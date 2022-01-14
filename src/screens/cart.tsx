@@ -17,13 +17,6 @@ type RootStackParamList = {
 };
 type Props = NativeStackScreenProps<RootStackParamList>;
 const Cart = ({navigation}: Props) => {
-  //hiding tab bar
-  // useEffect(() => {
-  //   navigation.s({
-  //     tabBarVisible: false,
-  //   });
-  // }, []);
-
   //handling back button click
   const handleBack = () => {
     navigation.navigate('Home');
@@ -214,7 +207,7 @@ const styles = StyleSheet.create({
   },
   addToCartText: {
     marginLeft: 17,
-    color: 'rgba(115, 226, 250, 1)',
+    color: colors.textColorNavigationBar,
     fontSize: 16,
     lineHeight: 19,
     fontFamily: 'Montserrat-semibold',
