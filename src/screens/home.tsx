@@ -7,20 +7,24 @@ const Home = () => {
   const dummyCategoryData = [
     {
       title: 'Living Room',
-      color: '#13BD75',
+      grad1: 'rgba(142, 250, 115, 1)',
+      gard2: 'rgba(19, 189, 117, 1)',
     },
 
     {
       title: 'Bed Room',
-      color: '#1357BD',
+      grad1: 'rgba(115, 226, 250, 1)',
+      gard2: 'rgba(19, 87, 189, 1)',
     },
     {
       title: 'Dinning Room',
-      color: '#4913BD',
+      grad1: 'rgba(158, 115, 250, 1)',
+      gard2: 'rgba(73, 19, 189, 1)',
     },
     {
       title: 'Kitchen',
-      color: '#8EFA73',
+      grad1: 'rgba(223, 115, 250, 1)',
+      gard2: 'rgba(255, 94, 26, 1)',
     },
   ];
 
@@ -61,9 +65,10 @@ const Home = () => {
           {dummyCategoryData.map(item => (
             <CategoryCard
               title={item.title}
-              color={item.color}
               font={14}
-              key={item.title + item.color}
+              key={item.title}
+              grad1={item.grad1}
+              grad2={item.gard2}
             />
           ))}
         </ScrollView>

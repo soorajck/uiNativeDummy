@@ -1,9 +1,11 @@
 import React from 'react';
 import {Text, Pressable, StyleSheet, View} from 'react-native';
-
+import LinearGradient from 'react-native-linear-gradient';
 type props = {
   title: string;
-  color: string;
+
+  grad1: string;
+  grad2: string;
   height?: number;
   width?: number;
   font: number;
@@ -14,32 +16,40 @@ type props = {
 
 const CategoryCard = ({
   title,
-  color,
+
   height,
   width,
   font,
   borderRadius,
   noShadow,
+  grad1,
+  grad2,
   onPress,
 }: props) => {
   return (
     <View
       style={[
-        styles(color, height, width, font, borderRadius, noShadow).mainView,
-        styles(color, height, width, font, borderRadius, noShadow)
+        styles(grad2, height, width, font, borderRadius, noShadow).mainView,
+        styles(grad2, height, width, font, borderRadius, noShadow)
           .shadowContainer,
       ]}>
-      <Pressable
-        style={[
-          styles(color, height, width, font, borderRadius).cardContainer,
-        ]}>
-        <Text style={styles().text}>{title}</Text>
+      <Pressable>
+        <LinearGradient
+          start={{x: 0, y: 1.0}}
+          end={{x: 1.0, y: 0}}
+          locations={[0, 0.85]}
+          colors={[grad2, grad1]}
+          style={
+            styles(grad2, height, width, font, borderRadius).cardContainer
+          }>
+          <Text style={styles().text}>{title}</Text>
+        </LinearGradient>
       </Pressable>
     </View>
   );
 };
 const styles = (
-  color?: string,
+  grad2?: string,
   height?: number,
   width?: number,
   font?: number,
@@ -49,15 +59,16 @@ const styles = (
   StyleSheet.create({
     mainView: {
       height: height ? height + 20 : 80,
+      marginRight: 15,
     },
+    linerGrad: {},
     cardContainer: {
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: color,
+      backgroundColor: grad2,
       width: width || 150,
       height: height || 60,
       borderRadius: borderRadius || 9,
-      marginRight: 15,
       fontSize: font,
     },
     text: {
@@ -65,7 +76,7 @@ const styles = (
       color: '#FFFFFF',
     },
     shadowContainer: {
-      shadowColor: color,
+      shadowColor: grad2,
       shadowOffset: {
         width: noShadow ? 0 : 3,
         height: noShadow ? 0 : 15,
