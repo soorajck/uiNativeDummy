@@ -1,6 +1,7 @@
 import React from 'react';
 import {Text, Pressable, StyleSheet, ImageBackground, View} from 'react-native';
 import colors from '../../assets/colors/colors';
+import {CartItemType} from '../screens/home';
 
 type props = {
   title?: string;
@@ -8,7 +9,8 @@ type props = {
   height: number;
   width: number;
   borderRadius: number;
-  onPress?: () => void;
+  item: CartItemType;
+  handleItemClick: (item: CartItemType) => void;
 };
 
 const CategoryCardImage = ({
@@ -17,10 +19,13 @@ const CategoryCardImage = ({
   height,
   width,
   borderRadius,
-  onPress,
+  item,
+  handleItemClick,
 }: props) => {
   return (
-    <Pressable style={styles().shadowProp}>
+    <Pressable
+      style={styles().shadowProp}
+      onPress={() => handleItemClick(item)}>
       <View style={styles(borderRadius).cardContainer}>
         <ImageBackground
           source={image}
