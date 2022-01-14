@@ -1,106 +1,147 @@
-import React from 'react';
-import {Image, StyleSheet, View, Text, ScrollView} from 'react-native';
-import colors from '../../assets/colors/colors';
-import {CustomHeader2, CategoryCard} from '../components';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  ScrollView,
+  Image,
+  Alert,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import colors from '../../assets/colors/colors';
+import {CartItem} from '../components';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import LinearGradient from 'react-native-linear-gradient';
+import {CartItemType} from '../screens/home';
+import useCartStore from '../store/useStore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 type RootStackParamList = {
   Home: undefined;
-  Profile: undefined;
+  ItemPage: {item: CartItemType};
 };
+
 type Props = NativeStackScreenProps<RootStackParamList>;
-const Cart = ({navigation}: Props) => {
-  //handling back button click
-  const handleBack = () => {
-    navigation.navigate('Home');
+
+const Cart = ({navigation, route}: Props) => {
+  //redirecting to item page when cart is empty
+
+  //handlingItemClick
+  const handleItemClick = (item: CartItemType) => {
+    navigation.navigate('ItemPage', {
+      item: item,
+    });
   };
 
-  //dummy data for categories / badges
-  const dummyData = [
-    {
-      title: 'Home',
-      grad1: 'rgba(142, 250, 115, 1)',
-      gard2: 'rgba(19, 189, 117, 1)',
-    },
+  //stateManagement of cart using zustad
+  const cartZustad = useCartStore(state => state.cartItems);
+  const addToCart = useCartStore(state => state.setCartItemsData);
+  const [cartItems, setCartItems] = useState(cartZustad);
 
-    {
-      title: 'Office',
-      grad1: 'rgba(115, 226, 250, 1)',
-      gard2: 'rgba(19, 87, 189, 1)',
-    },
+  //handling adding to cart
+  const handleAddToCart = (clickedItem: CartItemType) => {
+    setCartItems(prev => {
+      const isItemInCart = prev.find(item => item.id === clickedItem.id);
+      if (isItemInCart) {
+        return prev.map(item =>
+          item.id === clickedItem.id
+            ? {...item, amount: item.amount + 1}
+            : item,
+        );
+      }
+      return [...prev, {...clickedItem, amount: 1}];
+    });
+  };
 
-    {
-      title: 'Hotel',
-      grad1: 'rgba(158, 115, 250, 1)',
-      gard2: 'rgba(73, 19, 189, 1)',
-    },
+  //handling removing from cart
+  const handleRemoveFromCart = (id: number) => {
+    setCartItems(prev =>
+      prev.reduce((ack, item) => {
+        if (item.id === id) {
+          if (item.amount === 1) return ack;
+          return [...ack, {...item, amount: item.amount - 1}];
+        } else {
+          return [...ack, item];
+        }
+      }, [] as CartItemType[]),
+    );
+  };
 
-    {
-      title: 'Beach',
-      grad1: 'rgba(223, 115, 250, 1)',
-      gard2: 'rgba(255, 94, 26, 1)',
-    },
-  ];
+  //getting total number of items
+  const getTotalItems = (items: CartItemType[]) =>
+    items.reduce((ack: number, item) => ack + item.amount, 0);
+
+  //calculating total price
+
+  const calculateTotal = (items: CartItemType[]) =>
+    items.reduce((ack: number, item) => ack + item.amount * item.price, 0);
+
+  //storing cart changes in zustad
+  useEffect(() => {
+    storeData(cartItems);
+    addToCart(cartItems);
+  }, [cartItems]);
+
+  //setting in asynch storage
+
+  const storeData = async (value: any) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem('cartItems', jsonValue);
+    } catch (e) {
+      Alert.alert('saving data failed');
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <CustomHeader2 handleBack={handleBack} />
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.shadowContainer}>
-          <Image
-            source={require('../../assets/images/flower5.png')}
-            style={styles.image}
-          />
-        </View>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Cart</Text>
+      </View>
 
-        <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>LeDécor Veases set of 5</Text>
-          <Text style={styles.headerSubText}>by LeDécor</Text>
+      {getTotalItems(cartZustad) === 0 ? (
+        <View style={styles.cartEmptyView}>
+          <Image
+            source={require('../../assets/images/emptyCart.png')}
+            style={styles.emptyCartImage}
+          />
+          <Text style={styles.cartEmptyText}> Your cart is empty !</Text>
         </View>
-        <View style={styles.priceAndRating}>
-          <Text style={styles.priceText}>$ 24.99</Text>
-          <View style={styles.ratingContainer}>
-            {[...Array(5)].map((e, i) => (
-              <Image
-                source={require('../../assets/images/starRated.png')}
-                key={Math.random()}
+      ) : (
+        <ScrollView>
+          <View style={styles.cartItemContainer}>
+            {cartZustad.map(item => (
+              <CartItem
+                key={item.id}
+                item={item}
+                addToCart={handleAddToCart}
+                removeFromCart={handleRemoveFromCart}
+                handleItemClick={handleItemClick}
               />
             ))}
-            <Image source={require('../../assets/images/starUnrated.png')} />
           </View>
-        </View>
-        <View style={styles.idealContainer}>
-          <Text style={styles.idealHeading}>Ideal for</Text>
-          <View style={styles.idealContainerBadge}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {dummyData.map(item => (
-                <CategoryCard
-                  title={item.title}
-                  key={Math.random()}
-                  height={32}
-                  width={92}
-                  borderRadius={3}
-                  font={12}
-                  noShadow={true}
-                  grad1={item.grad1}
-                  grad2={item.gard2}
-                />
-              ))}
-            </ScrollView>
+
+          <View style={styles.totalContainer}>
+            <Text style={styles.totalText}>Total</Text>
+            <Text style={styles.totalPrice}>${calculateTotal(cartZustad)}</Text>
           </View>
-        </View>
-        <View style={styles.desc}>
-          <Text style={styles.descText}>
-            High Grade Porcelain Ceramic Material Light Weight, Durable & Long
-            Lasting Impression It glories your home interiors beautifully Royal
-            touch finishing, best deal for gifting
-          </Text>
-        </View>
-      </ScrollView>
-      <View style={styles.addToCartButton}>
-        <Image source={require('../../assets/images/shopping-cart.png')} />
-        <Text style={styles.addToCartText}> Add to Cart</Text>
-      </View>
+
+          <View style={styles.proceedButtonContainer}>
+            <Pressable style={styles.proceedButton}>
+              <LinearGradient
+                start={{x: 0, y: 1.0}}
+                end={{x: 1.0, y: 0}}
+                locations={[0, 0.85]}
+                colors={['rgba(115, 226, 250, 1)', 'rgba(19, 87, 189, 1)']}
+                style={styles.proceedButton}>
+                <Text style={styles.proceedButtonText}>Proceed </Text>
+                <Text style={styles.proceedButtonText}>{'>'} </Text>
+              </LinearGradient>
+            </Pressable>
+          </View>
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };
@@ -109,106 +150,83 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  shadowContainer: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.36,
-    shadowRadius: 6.68,
-    elevation: 11,
-  },
 
-  image: {
-    height: 175,
-    marginTop: 30,
-    marginHorizontal: 30,
-    borderRadius: 12,
-  },
-  headerContainer: {
-    marginTop: 50,
-    marginHorizontal: 30,
-  },
-  headerText: {
-    fontSize: 36,
-    lineHeight: 42,
-    fontFamily: 'Montserrat-Bold',
-  },
-  headerSubText: {
-    fontSize: 18,
-    color: colors.textColor,
-    opacity: 0.5,
-    fontFamily: 'Montserrat-Regular',
-    lineHeight: 21,
-  },
-  priceAndRating: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignContent: 'center',
-    marginTop: 20,
-    marginHorizontal: 30,
-  },
-  ratingContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignContent: 'center',
-    paddingTop: 5,
-  },
-
-  priceText: {
-    fontSize: 24,
-    lineHeight: 28,
-    color: colors.textColorSecondary,
-    fontFamily: 'Montserrat-Bold',
-  },
-  idealContainer: {
-    marginTop: 30,
-    marginHorizontal: 30,
-    textAlign: 'start',
-  },
-  idealHeading: {
-    fontSize: 18,
-    color: colors.textColor,
-    opacity: 0.5,
-    fontFamily: 'Montserrat-Regular',
-    lineHeight: 21,
-  },
-  idealContainerBadge: {
-    marginTop: 8,
-  },
-  desc: {
-    marginTop: 10,
-    marginHorizontal: 30,
-  },
-  descText: {
-    fontSize: 14,
-    lineHeight: 25,
-    color: colors.textColor,
-    fontFamily: 'Montserrat-Regular',
-  },
-  addToCartButton: {
-    height: 100,
-    backgroundColor: colors.backgroundNavigationBar,
-    position: 'absolute',
+  header: {
+    height: 50,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
-    bottom: 0,
-    flexDirection: 'row',
+    marginTop: 20,
+    marginBottom: 5,
   },
-  addToCartText: {
-    marginLeft: 17,
-    color: colors.textColorNavigationBar,
-    fontSize: 16,
-    lineHeight: 19,
-    fontFamily: 'Montserrat-semibold',
+  headerText: {
+    fontSize: 30,
+    fontFamily: 'Montserrat-Bold',
   },
   scrollView: {
-    flex: 1,
-    marginBottom: 80,
+    margin: 5,
+  },
+  cartItemContainer: {
+    marginHorizontal: 15,
+  },
+  proceedButtonContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    margin: 20,
+    alignItems: 'center',
+  },
+  proceedButton: {
+    width: 200,
+    height: 60,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 20,
+    flexDirection: 'row',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginRight: 20,
+  },
+  proceedButtonText: {
+    fontSize: 22,
+    fontFamily: 'Montserrat-Bold',
+    color: 'white',
+  },
+  totalContainer: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginHorizontal: 15,
+    marginVertical: 20,
+  },
+  totalText: {
+    fontSize: 26,
+    fontFamily: 'Montserrat-Bold',
+    color: colors.textColor,
+  },
+  totalPrice: {
+    fontSize: 26,
+    fontFamily: 'Montserrat-Bold',
+    color: colors.textColorSecondary,
+  },
+  cartEmptyView: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 150,
+  },
+  cartEmptyText: {
+    fontSize: 24,
+    marginTop: 20,
+    fontFamily: 'Montserrat-Bold',
+    color: colors.textColor,
+  },
+  emptyCartImage: {
+    width: 250,
+    height: 250,
+    marginRight: 20,
   },
 });
+
 export default Cart;

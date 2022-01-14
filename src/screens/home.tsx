@@ -3,92 +3,67 @@ import {StyleSheet, View, Text, ScrollView, FlatList} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import colors from '../../assets/colors/colors';
 import {CategoryCard, CategoryCardImage, CustomHeader1} from '../components';
+import {
+  dummyDataRecomended,
+  dummyDataIdeal,
+  dummyCategoryData,
+} from '../store/dummyItemData';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-const Home = () => {
-  //dummy data for categories / badges
-  const dummyCategoryData = [
-    {
-      title: 'Living Room',
-      grad1: 'rgba(142, 250, 115, 1)',
-      gard2: 'rgba(19, 189, 117, 1)',
-    },
+export type CartItemType = {
+  id: number;
+  description: string;
+  image: string;
+  price: number;
+  title: string;
+  rating: number;
+  category: string[];
+  amount: number;
+};
 
-    {
-      title: 'Bed Room',
-      grad1: 'rgba(115, 226, 250, 1)',
-      gard2: 'rgba(19, 87, 189, 1)',
-    },
-    {
-      title: 'Dinning Room',
-      grad1: 'rgba(158, 115, 250, 1)',
-      gard2: 'rgba(73, 19, 189, 1)',
-    },
-    {
-      title: 'Kitchen',
-      grad1: 'rgba(223, 115, 250, 1)',
-      gard2: 'rgba(255, 94, 26, 1)',
-    },
-  ];
-  //dummy data image cards1
-  const dummyDataCards = [
-    {
-      title: 'Candle Holder',
-      image: require('../../assets/images/candle.png'),
-      id: '1',
-    },
-    {
-      title: 'Candle Holder',
-      image: require('../../assets/images/candle.png'),
-      id: '2',
-    },
-    {
-      title: 'Candle Holder',
-      image: require('../../assets/images/candle.png'),
-      id: '3',
-    },
-  ];
+type RootStackParamList = {
+  Home: undefined;
+  ItemPage: {item: CartItemType};
+};
+type Props = NativeStackScreenProps<RootStackParamList>;
 
-  //dummy data image cards1
-  const dummyDataCards1 = [
-    {
-      image: require('../../assets/images/flower1.png'),
-      id: '1',
-    },
-    {
-      image: require('../../assets/images/flower2.png'),
-      id: '2',
-    },
-    {
-      image: require('../../assets/images/flower3.png'),
-      id: '3',
-    },
-  ];
+const Home = ({navigation}: Props) => {
+  //handlingItemClick
+  const handleItemClick = (item: CartItemType) => {
+    navigation.navigate('ItemPage', {
+      item: item,
+    });
+  };
 
-  const Recomended = ({title, image}: any) => (
+  //recomended items flatslist
+  const Recomended = ({title, image, item}: any) => (
     <CategoryCardImage
       height={150}
       width={315}
       title={title}
       image={image}
       borderRadius={10}
+      item={item}
+      handleItemClick={handleItemClick}
     />
   );
-
+  //render items flatlist recomended
   const renderItemRecomended = ({item}: any) => (
-    <Recomended title={item.title} image={item.image} />
+    <Recomended title={item.title} image={item.image} item={item} />
   );
-
-  const Popular = ({image}: any) => (
+  //popular items flatlist
+  const Popular = ({item, image}: any) => (
     <CategoryCardImage
       height={140}
       width={120}
-      image={image}
+      image={item.image}
       borderRadius={12}
-      key={Math.random()}
+      item={item}
+      handleItemClick={handleItemClick}
     />
   );
-
-  const renderItemPopular = ({item}: any) => <Popular image={item.image} />;
+  //render items popular flatlist
+  const renderItemPopular = ({item}: any) => <Popular item={item} />;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -116,7 +91,7 @@ const Home = () => {
           <FlatList
             style={styles.subHeadingContent}
             horizontal
-            data={dummyDataCards}
+            data={dummyDataRecomended}
             renderItem={renderItemRecomended}
             showsHorizontalScrollIndicator={false}
             keyExtractor={item => item.id}
@@ -129,7 +104,7 @@ const Home = () => {
           <FlatList
             style={styles.subHeadingContent}
             horizontal
-            data={dummyDataCards1}
+            data={dummyDataIdeal}
             renderItem={renderItemPopular}
             showsHorizontalScrollIndicator={false}
             keyExtractor={item => item.id}
@@ -141,7 +116,7 @@ const Home = () => {
           <FlatList
             style={styles.subHeadingContent}
             horizontal
-            data={dummyDataCards1}
+            data={dummyDataIdeal}
             renderItem={renderItemPopular}
             showsHorizontalScrollIndicator={false}
             keyExtractor={item => item.id}
@@ -188,7 +163,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    marginBottom: 80,
+    marginBottom: 60,
   },
 });
 export default Home;
