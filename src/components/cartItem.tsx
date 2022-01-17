@@ -20,7 +20,9 @@ export default function CartItem({
     <View style={styles.container} key={item.id}>
       <Pressable onPress={() => handleItemClick(item)}>
         <Image
-          source={require('../../assets/images/flower1.png')}
+          source={{
+            uri: item.image,
+          }}
           style={styles.image}
         />
       </Pressable>
@@ -81,6 +83,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    maxWidth: '60%',
   },
   itemName: {
     fontSize: 20,

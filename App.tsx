@@ -3,6 +3,7 @@ import {View, Alert} from 'react-native';
 import Routes from './src/navigation/routes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useCartStore from './src/store/useStore';
+import {QueryClient, QueryClientProvider} from 'react-query';
 
 const App = () => {
   //storing reduer to zustad
@@ -28,10 +29,14 @@ const App = () => {
     getDataFromAsyncStorage();
   }, []);
 
+  const queryClient = new QueryClient();
+
   return (
-    <View style={{flex: 1}}>
-      <Routes />
-    </View>
+    <QueryClientProvider client={queryClient}>
+      <View style={{flex: 1}}>
+        <Routes />
+      </View>
+    </QueryClientProvider>
   );
 };
 

@@ -28,8 +28,10 @@ const CategoryCardImage = ({
       onPress={() => handleItemClick(item)}>
       <View style={styles(borderRadius).cardContainer}>
         <ImageBackground
-          source={image}
-          resizeMode="cover"
+          source={{
+            uri: image,
+          }}
+          resizeMode="stretch"
           style={[styles(width, height).image]}>
           <Text style={styles(width, height).text}>{title}</Text>
         </ImageBackground>

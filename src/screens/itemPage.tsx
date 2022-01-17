@@ -16,6 +16,9 @@ import {dummyData} from '../store/dummyItemData';
 import {CartItemType} from './home';
 import useCartStore from '../store/useStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useQuery} from 'react-query';
+import {fetchSingleProduct} from '../store/networkRequest';
+import {ActivityIndicator} from 'react-native';
 
 type RootStackParamList = {
   Home: undefined;
@@ -99,75 +102,115 @@ const ItemPage = ({navigation, route}: Props) => {
     }
   };
 
+  //getching single product from fake store based on id
+
+  const [product, setProduct] = useState<CartItemType | any>();
+
+  const {isLoading, error, data} = useQuery(
+    ['repoData1', item.id],
+    fetchSingleProduct,
+  );
+
+  useEffect(() => {
+    if (data && !isLoading) {
+      setProduct({
+        ...data?.data,
+        rating: Math.floor(data?.data.rating.rate),
+      });
+    } else {
+      setProduct(item);
+    }
+  }, [data, isLoading]);
+
   return (
     <SafeAreaView style={styles.container}>
       <CustomHeader2 handleBack={handleBack} />
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.shadowContainer}>
-          <Image
-            source={require('../../assets/images/flower5.png')}
-            style={styles.image}
-          />
-        </View>
-
-        <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>{item.title}</Text>
-          <Text style={styles.headerSubText}>by LeDécor</Text>
-        </View>
-        <View style={styles.priceAndRating}>
-          <Text style={styles.priceText}>$ {item.price}</Text>
-          <View style={styles.ratingContainer}>
-            {[...Array(item.rating)].map((e, i) => (
+      {!isLoading && product?.id ? (
+        <>
+          <ScrollView style={styles.scrollView}>
+            <View style={styles.shadowContainer}>
               <Image
-                source={require('../../assets/images/starRated.png')}
-                key={Math.random()}
+                source={{
+                  uri: product.image,
+                }}
+                style={styles.image}
               />
-            ))}
+            </View>
 
-            {[...Array(5 - item.rating)].map((e, i) => (
-              <Image
-                source={require('../../assets/images/starUnrated.png')}
-                key={Math.random()}
-              />
-            ))}
-          </View>
+            <View style={styles.headerContainer}>
+              <Text style={styles.headerText}>{product.title}</Text>
+              <Text style={styles.headerSubText}>by LeDécor</Text>
+            </View>
+            <View style={styles.priceAndRating}>
+              <Text style={styles.priceText}>$ {product.price}</Text>
+              <View style={styles.ratingContainer}>
+                {[...Array(product.rating)].map((e, i) => (
+                  <Image
+                    source={require('../../assets/images/starRated.png')}
+                    key={Math.random()}
+                  />
+                ))}
+
+                {[...Array(5 - product.rating)].map((e, i) => (
+                  <Image
+                    source={require('../../assets/images/starUnrated.png')}
+                    key={Math.random()}
+                  />
+                ))}
+              </View>
+            </View>
+            <View style={styles.idealContainer}>
+              <Text style={styles.idealHeading}>Ideal for</Text>
+              <View style={styles.idealContainerBadge}>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  {dummyData.map(item => (
+                    <CategoryCard
+                      title={item.title}
+                      key={Math.random()}
+                      height={32}
+                      width={92}
+                      borderRadius={3}
+                      font={12}
+                      noShadow={true}
+                      grad1={item.grad1}
+                      grad2={item.gard2}
+                    />
+                  ))}
+                </ScrollView>
+              </View>
+            </View>
+            <View style={styles.desc}>
+              <Text style={styles.descText}>{product.description}</Text>
+            </View>
+          </ScrollView>
+
+          <Pressable
+            style={styles.addToCartButton}
+            onPress={() =>
+              handleItemAvailability(product.id)
+                ? handleRemoveFromCart(product.id)
+                : handleAddToCart(product)
+            }>
+            <Image source={require('../../assets/images/shopping-cart.png')} />
+            <Text style={styles.addToCartText}>
+              {handleItemAvailability(product.id)
+                ? 'Remove from Cart'
+                : 'Add to Cart'}
+            </Text>
+          </Pressable>
+        </>
+      ) : (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          {isLoading ? (
+            <ActivityIndicator
+              color={'rgba(115, 226, 250, 1)'}
+              size={'large'}
+            />
+          ) : (
+            <Text>Loading Item failed</Text>
+          )}
         </View>
-        <View style={styles.idealContainer}>
-          <Text style={styles.idealHeading}>Ideal for</Text>
-          <View style={styles.idealContainerBadge}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {dummyData.map(item => (
-                <CategoryCard
-                  title={item.title}
-                  key={Math.random()}
-                  height={32}
-                  width={92}
-                  borderRadius={3}
-                  font={12}
-                  noShadow={true}
-                  grad1={item.grad1}
-                  grad2={item.gard2}
-                />
-              ))}
-            </ScrollView>
-          </View>
-        </View>
-        <View style={styles.desc}>
-          <Text style={styles.descText}>{item.description}</Text>
-        </View>
-      </ScrollView>
-      <Pressable
-        style={styles.addToCartButton}
-        onPress={() =>
-          handleItemAvailability(item.id)
-            ? handleRemoveFromCart(item.id)
-            : handleAddToCart(item)
-        }>
-        <Image source={require('../../assets/images/shopping-cart.png')} />
-        <Text style={styles.addToCartText}>
-          {handleItemAvailability(item.id) ? 'Remove from Cart' : 'Add to Cart'}
-        </Text>
-      </Pressable>
+      )}
     </SafeAreaView>
   );
 };
