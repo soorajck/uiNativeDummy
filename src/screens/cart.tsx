@@ -132,7 +132,9 @@ const Cart = ({navigation, route}: Props) => {
 
           <View style={styles.totalContainer}>
             <Text style={styles.totalText}>Total</Text>
-            <Text style={styles.totalPrice}>${calculateTotal(cartZustad)}</Text>
+            <Text style={styles.totalPrice}>
+              ${calculateTotal(cartZustad).toFixed(2)}
+            </Text>
           </View>
 
           <View style={styles.proceedButtonContainer}>

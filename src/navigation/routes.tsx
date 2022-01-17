@@ -5,10 +5,12 @@ import {Home, Cart, Search, Favorite, ItemPage} from '../screens';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import colors from '../../assets/colors/colors';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
+import {Badge} from 'react-native-elements';
+import useCartStore from '../store/useStore';
 //creating tab navigator for bottom navigation
 
 export const TabNavigators = () => {
+  const cartZustad = useCartStore(state => state.cartItems);
   const Tab = createBottomTabNavigator();
 
   return (
@@ -63,9 +65,22 @@ export const TabNavigators = () => {
 
           tabBarIcon: ({focused}) => {
             return (
-              <Image
-                source={require('../../assets/images/shopping-cart.png')}
-              />
+              <>
+                {cartZustad?.length > 0 && false && (
+                  <Badge
+                    status="primary"
+                    value={cartZustad?.length}
+                    containerStyle={{
+                      position: 'absolute',
+                      bottom: 25,
+                      left: 60,
+                    }}
+                  />
+                )}
+                <Image
+                  source={require('../../assets/images/shopping-cart.png')}
+                />
+              </>
             );
           },
         }}
