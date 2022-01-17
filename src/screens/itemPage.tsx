@@ -134,6 +134,7 @@ const ItemPage = ({navigation, route}: Props) => {
                   uri: product.image,
                 }}
                 style={styles.image}
+                resizeMode="stretch"
               />
             </View>
 

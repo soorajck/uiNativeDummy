@@ -28,22 +28,26 @@ export const dummyData = [
 //dummy data for categories / badges in home page
 export const dummyCategoryData = [
   {
+    id: 1,
     title: 'Living Room',
     grad1: 'rgba(142, 250, 115, 1)',
     gard2: 'rgba(19, 189, 117, 1)',
   },
 
   {
+    id: 2,
     title: 'Bed Room',
     grad1: 'rgba(115, 226, 250, 1)',
     gard2: 'rgba(19, 87, 189, 1)',
   },
   {
+    id: 3,
     title: 'Dinning Room',
     grad1: 'rgba(158, 115, 250, 1)',
     gard2: 'rgba(73, 19, 189, 1)',
   },
   {
+    id: 4,
     title: 'Kitchen',
     grad1: 'rgba(223, 115, 250, 1)',
     gard2: 'rgba(255, 94, 26, 1)',

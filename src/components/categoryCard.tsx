@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Dispatch} from 'react';
 import {Text, Pressable, StyleSheet, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 type props = {
@@ -11,12 +11,12 @@ type props = {
   font: number;
   borderRadius?: number;
   noShadow?: boolean;
-  onPress?: () => void;
+  onPress?: React.Dispatch<React.SetStateAction<string>>;
+  selectedCategory?: string;
 };
 
 const CategoryCard = ({
   title,
-
   height,
   width,
   font,
@@ -25,7 +25,18 @@ const CategoryCard = ({
   grad1,
   grad2,
   onPress,
+  selectedCategory,
 }: props) => {
+  const handleCategorySeletion = (title: string) => {
+    if (onPress) {
+      if (selectedCategory === title) {
+        onPress('');
+      } else {
+        onPress(title);
+      }
+    }
+  };
+
   return (
     <View
       style={[
@@ -33,7 +44,7 @@ const CategoryCard = ({
         styles(grad2, height, width, font, borderRadius, noShadow)
           .shadowContainer,
       ]}>
-      <Pressable>
+      <Pressable onPress={() => handleCategorySeletion(title)}>
         <LinearGradient
           start={{x: 0, y: 1.0}}
           end={{x: 1.0, y: 0}}
@@ -42,7 +53,9 @@ const CategoryCard = ({
           style={
             styles(grad2, height, width, font, borderRadius).cardContainer
           }>
-          <Text style={styles().text}>{title}</Text>
+          <Text style={styles().text}>
+            {title.charAt(0).toUpperCase() + title.slice(1)}
+          </Text>
         </LinearGradient>
       </Pressable>
     </View>

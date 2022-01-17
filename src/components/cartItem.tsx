@@ -24,6 +24,7 @@ export default function CartItem({
             uri: item.image,
           }}
           style={styles.image}
+          resizeMode="stretch"
         />
       </Pressable>
       <View style={styles.dataHolder}>
