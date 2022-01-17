@@ -248,6 +248,7 @@ const styles = StyleSheet.create({
   desc: {
     marginTop: 10,
     marginHorizontal: 30,
+    marginBottom: 40,
   },
   descText: {
     fontSize: 14,

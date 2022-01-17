@@ -106,7 +106,7 @@ const Home = ({navigation}: Props) => {
           />
         </View>
 
-        <View style={styles.subHeading}>
+        <View style={[styles.subHeading, styles.finalContent]}>
           <Text style={styles.subHeadingText}>Popular</Text>
 
           <FlatList
@@ -156,6 +156,10 @@ const styles = StyleSheet.create({
   subHeadingContent: {
     marginTop: 19,
     marginRight: 30,
+  },
+
+  finalContent: {
+    marginBottom: 30,
   },
   scrollView: {
     flex: 1,
