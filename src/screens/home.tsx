@@ -150,6 +150,7 @@ const Home = ({navigation}: Props) => {
   const categoryBasedDataFakeStore = useQuery(
     ['repoData2', selectedCategory],
     fetchCategoryProducts,
+    {enabled: selectedCategory !== ''},
   );
 
   useEffect(() => {
