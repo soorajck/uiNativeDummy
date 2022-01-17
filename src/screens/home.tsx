@@ -118,18 +118,6 @@ const Home = ({navigation}: Props) => {
             keyExtractor={item => item.id}
           />
         </View>
-        <View style={styles.subHeading}>
-          <Text style={styles.subHeadingText}>Popular</Text>
-
-          <FlatList
-            style={styles.subHeadingContent}
-            horizontal
-            data={dummyDataIdeal}
-            renderItem={renderItemPopular}
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={item => item.id}
-          />
-        </View>
       </ScrollView>
     </SafeAreaView>
   );
