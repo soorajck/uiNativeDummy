@@ -39,7 +39,7 @@ const Home = ({navigation}: Props) => {
 
   //recomended items flatslist component
 
-  const Recomended = ({title, image, item}: any) => (
+  const Recomended = ({title, image, item, index}: any) => (
     <CategoryCardImage
       height={150}
       width={315}
@@ -48,17 +48,23 @@ const Home = ({navigation}: Props) => {
       borderRadius={10}
       item={item}
       handleItemClick={handleItemClick}
+      index={index}
     />
   );
   //render items flatlist recomended
 
-  const renderItemRecomended = ({item}: any) => (
-    <Recomended title={item.title} image={item.image} item={item} />
+  const renderItemRecomended = ({item, index}: any) => (
+    <Recomended
+      title={item.title}
+      image={item.image}
+      item={item}
+      index={index}
+    />
   );
 
   //popular items flatlist component
 
-  const Popular = ({item, image}: any) => (
+  const Popular = ({item, image, index}: any) => (
     <CategoryCardImage
       height={140}
       width={120}
@@ -66,12 +72,15 @@ const Home = ({navigation}: Props) => {
       borderRadius={12}
       item={item}
       handleItemClick={handleItemClick}
+      index={index}
     />
   );
 
   //render items popular flatlist
 
-  const renderItemPopular = ({item}: any) => <Popular item={item} />;
+  const renderItemPopular = ({item, index}: any) => (
+    <Popular item={item} index={index} />
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -82,13 +91,14 @@ const Home = ({navigation}: Props) => {
         </View>
         <View style={styles.categoryContainer}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {dummyCategoryData.map(item => (
+            {dummyCategoryData.map((item, index) => (
               <CategoryCard
                 title={item.title}
                 font={14}
                 key={item.title}
                 grad1={item.grad1}
                 grad2={item.gard2}
+                index={index}
               />
             ))}
           </ScrollView>
@@ -140,22 +150,21 @@ const styles = StyleSheet.create({
   categoryContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 30,
   },
   subHeading: {
     marginTop: 30,
     textAlign: 'start',
-    marginLeft: 30,
   },
   subHeadingText: {
     fontSize: 18,
     color: colors.textColor,
     fontFamily: 'Montserrat-SemiBold',
     opacity: 0.5,
+    marginLeft: 30,
   },
   subHeadingContent: {
     marginTop: 19,
-    marginRight: 30,
+    //marginRight: 30,
   },
 
   finalContent: {

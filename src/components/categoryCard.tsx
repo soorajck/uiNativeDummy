@@ -12,6 +12,7 @@ type props = {
   borderRadius?: number;
   noShadow?: boolean;
   onPress?: () => void;
+  index?: number;
 };
 
 const CategoryCard = ({
@@ -25,11 +26,13 @@ const CategoryCard = ({
   grad1,
   grad2,
   onPress,
+  index,
 }: props) => {
   return (
     <View
       style={[
-        styles(grad2, height, width, font, borderRadius, noShadow).mainView,
+        styles(grad2, height, width, font, borderRadius, noShadow, index)
+          .mainView,
         styles(grad2, height, width, font, borderRadius, noShadow)
           .shadowContainer,
       ]}>
@@ -55,11 +58,13 @@ const styles = (
   font?: number,
   borderRadius?: number,
   noShadow?: boolean,
+  index?: number,
 ) =>
   StyleSheet.create({
     mainView: {
       height: height ? height + 20 : 80,
       marginRight: 15,
+      marginLeft: index === 0 ? 30 : 0,
     },
     linerGrad: {},
     cardContainer: {

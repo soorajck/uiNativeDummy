@@ -136,7 +136,7 @@ const ItemPage = ({navigation, route}: Props) => {
           <Text style={styles.idealHeading}>Ideal for</Text>
           <View style={styles.idealContainerBadge}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {dummyData.map(item => (
+              {dummyData.map((item, index) => (
                 <CategoryCard
                   title={item.title}
                   key={Math.random()}
@@ -147,6 +147,7 @@ const ItemPage = ({navigation, route}: Props) => {
                   noShadow={true}
                   grad1={item.grad1}
                   grad2={item.gard2}
+                  index={index}
                 />
               ))}
             </ScrollView>
@@ -232,7 +233,6 @@ const styles = StyleSheet.create({
   },
   idealContainer: {
     marginTop: 30,
-    marginHorizontal: 30,
     textAlign: 'start',
   },
   idealHeading: {
@@ -241,6 +241,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
     fontFamily: 'Montserrat-Regular',
     lineHeight: 21,
+    marginHorizontal: 30,
   },
   idealContainerBadge: {
     marginTop: 8,

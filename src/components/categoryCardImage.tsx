@@ -11,6 +11,7 @@ type props = {
   borderRadius: number;
   item: CartItemType;
   handleItemClick: (item: CartItemType) => void;
+  index: number;
 };
 
 const CategoryCardImage = ({
@@ -21,12 +22,14 @@ const CategoryCardImage = ({
   borderRadius,
   item,
   handleItemClick,
+  index,
 }: props) => {
   return (
     <Pressable
       style={styles().shadowProp}
       onPress={() => handleItemClick(item)}>
-      <View style={styles(borderRadius).cardContainer}>
+      <View
+        style={styles(borderRadius, height, borderRadius, index).cardContainer}>
         <ImageBackground
           source={image}
           resizeMode="cover"
@@ -37,13 +40,19 @@ const CategoryCardImage = ({
     </Pressable>
   );
 };
-const styles = (width?: number, height?: number, borderRadius?: number) =>
+const styles = (
+  width?: number,
+  height?: number,
+  borderRadius?: number,
+  index?: number,
+) =>
   StyleSheet.create({
     cardContainer: {
       borderRadius: 10,
       marginRight: 15,
       marginBottom: 25,
       overflow: 'hidden',
+      marginLeft: index === 0 ? 30 : 0,
     },
     text: {
       paddingVertical: 21,
